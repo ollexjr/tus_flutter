@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tus_flutter/tus_flutter.dart';
 
 void main() => runApp(MyApp());
@@ -11,8 +12,11 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
+var tus = TusFlutter(null);
+
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  String endpoint = "";
 
   @override
   void initState() {
@@ -47,9 +51,24 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
+        body: ListView(children: <Widget>[
+          Text('Running on: $_platformVersion\n'),
+          TextField(
+              controller: TextEditingController(text: endpoint),
+              onChanged: (v) => setState(() {
+                    endpoint = v;
+                  })),
+          FlatButton(
+              child: Text("Pick image to upload"),
+              onPressed: () =>
+                  ImagePicker.pickImage(source: ImageSource.gallery)
+                      .then((ret) {
+                    tus.createUpload(endpoint, ret.path, {
+                      "xyz": "yxz",
+                      "he": "llo",
+                    });
+                  })),
+        ]),
       ),
     );
   }
