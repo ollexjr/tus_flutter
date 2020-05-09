@@ -5,3 +5,10 @@
 .pub/
 
 build/
+.idea/kotlinc.xml
+.idea/libraries/Dart_SDK.xml
+.idea/libraries/Dart_SDK.xml
+.idea/libraries/Flutter_for_Android.xml
+.idea/libraries/Flutter_Plugins.xml
+.idea/workspace.xml
+.idea/workspace.xml
